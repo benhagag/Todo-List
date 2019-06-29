@@ -45,6 +45,25 @@ class DB {
     return $dataSecured;
  }
 
+ public function queryArray($sql){
+
+  $allrows =[];
+  $result = $this->conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        array_push($allrows, $row);
+    }
+
+  } else {
+   return false;
+  }
+  
+  return $allrows;
+
+
+ }
+
 
 
   public function __construct()

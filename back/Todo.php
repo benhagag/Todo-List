@@ -18,10 +18,11 @@ class Todo
 
     public function alldata(){
         $sql = "SELECT * FROM `todo`";
-        $result = $this->conn->query($sql);
+        $result = $this->db->queryArray($sql);
         return $result;
     }
   
+ 
   
 
   
