@@ -6,8 +6,8 @@ class Todo
     private $db;
     private $conn;
 
-    public function __construct()
-    {
+    public function __construct(){
+      
       $this->db = DB::conection();
       $this->conn=$this->db->getConnection();
 

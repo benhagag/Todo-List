@@ -8,8 +8,7 @@ class DB {
   private $dbname;
   static $instance=null;
 
-  public function __construct()
-  {
+  public function __construct(){
     $this->servername="localhost";
     $this->username="root";
     $this->password="";
@@ -37,14 +36,14 @@ class DB {
 
   }
 
- public function getConnection() {
-   return $this->conn;
- }
+  public function getConnection() {
+    return $this->conn;
+  }
 
  // secure query from sql injection !
- public function secure($dataToSecure){
+  public function secure($dataToSecure){
 
-  $dataSecured = [];
+    $dataSecured = [];
     foreach ($dataToSecure as $key => $data) {
 
       if(is_numeric($data)){
@@ -60,35 +59,33 @@ class DB {
     }
 
     return $dataSecured;
- }
-
- public function queryArray($sql){
-
-  $allrows =[];
-  $result = $this->conn->query($sql);
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        array_push($allrows, $row);
-    }
-
-  } else {
-   return false;
   }
+
+  public function queryArray($sql){
+
+    $allrows =[];
+    $result = $this->conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+          array_push($allrows, $row);
+      }
+
+    } else {
+    return false;
+    }
   
-  return $allrows;
-
-
- }
+    return $allrows;
+  }
 
 
 
 
 
- public function __destruct(){
+  public function __destruct(){
 
-   $this->conn->close();
-}
+    $this->conn->close();
+  }
 }
 
 ?>
