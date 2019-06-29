@@ -41,6 +41,22 @@ class Todo
         }
           
     }
+
+      // delete row 
+      public function delete($data){
+
+        $data = $this->db->secure($data);
+        $id = $data["id"];
+
+        $sql = "DELETE FROM todo WHERE id=$id";
+
+        if  ($this->conn->query($sql) == true) {
+          return true;
+        } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($this->conn);
+        }
+    }
+
   
  
   

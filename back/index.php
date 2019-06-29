@@ -25,6 +25,15 @@
             print_r(json_encode($updateTodo));
 
         }
+    }elseif ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+
+        $data = (array)$data["dataToSend"];
+        
+        if(isset($data["id"])){
+            $deleteTodo = $TodoClass->delete($data);
+            print_r(json_encode($deleteTodo));
+        }
+
     }
 
 

@@ -40,6 +40,29 @@ $(document).ready(function() {
       }
     });
 
+  // delete function
+  $(document).on("click", ".delete", function() {
+    var dataToSend = {};
+    var $this = this;
+    dataToSend.id = $($this).data("id");
+    console.log(dataToSend);
+
+    $.ajax({
+      type: "DELETE",
+      url: urlApi,
+      data: JSON.stringify({ dataToSend }),
+      success: function(result) {
+        $($this)
+          .parent()
+          .parent()
+          .remove();
+      },
+      error: function(result) {
+        alert("מצטערים משהו לא עובד אנא נסה שוב מאוחר יותר");
+      }
+    });
+  });
+
   // unite function for append <tr> to table
   function appendData(data) {
     html = "";
