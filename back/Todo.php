@@ -21,7 +21,7 @@ class Todo
         $result = $this->db->queryArray($sql);
         return $result;
     }
-
+  
     // update row 
     public function update($data){
 
@@ -41,9 +41,8 @@ class Todo
         }
           
     }
-
-      // delete row 
-      public function delete($data){
+    // delete row 
+    public function delete($data){
 
         $data = $this->db->secure($data);
         $id = $data["id"];
@@ -57,12 +56,33 @@ class Todo
         }
     }
 
-  
- 
-  
+    // add row 
+    public function add($data){
 
-  
+        $data = $this->db->secure($data);
+        $name = $data["name"];
+        $todo = $data["todo"];
 
+        $sql = "INSERT INTO todo (name, todo)
+        VALUES ('$name','$todo')";
+
+        if  ($this->conn->query($sql) == true) {
+            $newRow = $this->getNewInsertedRow();
+            return $newRow;
+        } else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($this->conn);
+        }
+
+    }
+
+
+    // return the new row which is inseretd last ! 
+    public function getNewInsertedRow(){
+
+        $sql = "SELECT * from todo WHERE id = LAST_INSERT_ID()";
+        $result = $this->db->queryArray($sql);
+        return $result;
+    }
 }
 
 ?>

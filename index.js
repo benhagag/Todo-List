@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  const urlApi = "http://localhost:8080/matrixx/back";
+  const urlApi = "http://localhost:8080/matrixx/back/";
   // on page load !
   $.ajax({
     type: "GET",
@@ -12,7 +12,6 @@ $(document).ready(function() {
       alert("מצטערים משהו לא עובד אנא נסה שוב מאוחר יותר");
     }
   });
-
   // edit function on change text in table !
   $(document)
     .on("focus", "[contenteditable]", function() {
@@ -39,7 +38,6 @@ $(document).ready(function() {
         });
       }
     });
-
   // delete function
   $(document).on("click", ".delete", function() {
     var dataToSend = {};
@@ -62,6 +60,23 @@ $(document).ready(function() {
       }
     });
   });
+  // add function
+  $(document).on("click", "#add", function() {
+    var dataToSend = { name: "אנא תרשום שם ", todo: "אנא תרשום משימה" };
+    var dataDiplayRow;
+    $.ajax({
+      type: "POST",
+      url: urlApi,
+      data: JSON.stringify({ dataToSend }),
+      success: function(result) {
+        let htmlToprepend = appendData(result);
+        $("#tbody").prepend(htmlToprepend);
+      },
+      error: function(result) {
+        alert("מצטערים משהו לא עובד אנא נסה שוב מאוחר יותר");
+      }
+    });
+  });
 
   // unite function for append <tr> to table
   function appendData(data) {
@@ -74,7 +89,7 @@ $(document).ready(function() {
       }</td><td><button type="button" data-id=${
         row.id
       } class="btn btn-danger delete">מחיקה</button>
-            </td></tr>`;
+          </td></tr>`;
     });
 
     return html;
