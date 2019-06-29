@@ -16,7 +16,16 @@
         $allTodo = $TodoClass->alldata();
         print_r(json_encode($allTodo));
 
-}
+    }elseif($_SERVER["REQUEST_METHOD"] == "PUT"){
+
+        $data = (array)$data["dataToSend"];
+
+        if(isset($data["textToupdate"])){
+            $updateTodo = $TodoClass->update($data);
+            print_r(json_encode($updateTodo));
+
+        }
+    }
 
 
  }

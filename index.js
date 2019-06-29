@@ -13,6 +13,33 @@ $(document).ready(function() {
     }
   });
 
+  // edit function on change text in table !
+  $(document)
+    .on("focus", "[contenteditable]", function() {
+      const $this = $(this);
+      $this.data("before", $this.html());
+    })
+    .on("blur keyup paste input", "[contenteditable]", function() {
+      const $this = $(this);
+      if ($this.data("before") !== $this.html()) {
+        $this.data("before", $this.html());
+        $this.trigger("change");
+        var dataToSend = {};
+        dataToSend.textToupdate = $this.html();
+        dataToSend.id = $this.parent().attr("id");
+        dataToSend.column = $this.attr("class");
+        $.ajax({
+          type: "PUT",
+          url: urlApi,
+          data: JSON.stringify({ dataToSend }),
+          success: function(result) {},
+          error: function(result) {
+            alert("מצטערים משהו לא עובד אנא נסה שוב מאוחר יותר");
+          }
+        });
+      }
+    });
+
   // unite function for append <tr> to table
   function appendData(data) {
     html = "";
